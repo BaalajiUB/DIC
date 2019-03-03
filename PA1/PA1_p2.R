@@ -1,3 +1,4 @@
+rm(list = ls())
 #https://www.cdc.gov/flu/weekly/
 library(ggplot2)
 setwd("~/git_workspace/DIC/PA1")
@@ -219,3 +220,74 @@ chart4
 rm(chart4_data, melt_data)
 
 ##chart5
+library(usmap)
+
+chart5_data <- read.csv(file = 'StateDataforMap_2018-19week8.csv', header = T, stringsAsFactors = F)
+names(chart5_data)
+str(chart5_data)
+chart5_data <- chart5_data[,-c(2,3)]
+#chart5_data$ACTIVITY.LEVEL <- factor(chart5_data$ACTIVITY.LEVEL, levels = paste('Level ', seq(1,10,1)))
+#chart5_data$STATENAME <- tolower(chart5_data$STATENAME) 
+#chart5_data$ACTIVITY.LEVEL <- factor(as.numeric(gsub("Level ", "", chart5_data$ACTIVITY.LEVEL)))
+#head(chart5_data)
+
+#View(chart5_data)
+#unique(chart5_data$ACTIVITY.LEVEL)
+#names(chart5_data) <- c('state', 'ACTIVITY LEVEL', 'ACTIVITY.LEVEL.LABEL', 'WEEKEND', 'WEEK', 'SEASON')
+
+#https://stackoverflow.com/questions/14543627/extracting-numbers-from-vectors-of-strings
+#head(chart5_data)
+
+# #https://cran.r-project.org/web/packages/usmap/vignettes/mapping.html
+# cc <- scales::seq_gradient_pal("#CC0000", "#00C200", "Lab")(seq(0,1,length.out=10))
+
+#https://stackoverflow.com/questions/13353213/gradient-of-n-colors-ranging-from-color-1-and-color-2
+colfunc<-colorRampPalette(c("#CC0000","yellow","#00C200"))
+print(colfunc(10))
+#plot(rep(1,10),col=(colfunc(10)), pch=19,cex=2)
+
+
+head(statepop)
+names(statepop)
+req_data <- chart5_data[, names(chart5_data) %in% c('STATENAME','ACTIVITY.LEVEL')]
+#View(req_data)
+req_data <- merge(x = req_data, y = statepop, x.by = STATENAME, y.by = full, x.all = TRUE)
+req_data <- req_data[req_data$STATENAME == req_data$full, ]
+req_data$ACTIVITY.LEVEL <- factor(req_data$ACTIVITY.LEVEL, levels = c("Level 10", "Level 9",  "Level 8",  "Level 7",  "Level 6",  "Level 5",  "Level 4",  "Level 1" ))
+levels(req_data$ACTIVITY.LEVEL)
+chart5 <- plot_usmap(data = req_data, values = "ACTIVITY.LEVEL", lines = "black") + 
+  scale_fill_manual(values = c( "#CC0000", "#D73800", "#E27100", "#EEAA00", "#F9E200", "#E2F800", "#AAEA00", "#71DD00", "#38CF00", "#00C200")) +
+  theme(legend.position = "right")
+
+chart5
+rm(chart5_data, req_data,colfunc)
+
+# #to get discrete color codes equidistant from a gradient
+#cc <- scales::seq_gradient_pal("#CC0000", "#00C200", "Lab")(seq(0,1,length.out=100))
+
+# #https://stackoverflow.com/questions/37918696/display-of-specific-colors
+#to display colors generated in the previous step
+# cols <- function(a) image(1:10, 1, as.matrix(1:10), col=a, axes=FALSE , xlab="", ylab="")
+# a <- cc
+# cols(a)
+
+# states <- map_data("state")
+# 
+# req_data <- merge(x = states, y = chart5_data, x.by = region, y.by = STATENAAME, all.x = TRUE)
+# names(req_data)
+# 
+# 
+# ggplot(data = req_data) + 
+#   geom_polygon(aes(x = long, y = lat, fill = region, group = ACTIVITY.LEVEL), color = "white") + 
+#   coord_fixed(1.3) +
+#   guides(fill=FALSE)  # do this to leave off the color legend
+
+#names(states)
+#names(chart5_data)
+#head(chart5_data$STATENAME)
+
+#str(statepop)
+#str(req_data)
+
+#paste('Level ', seq(1,10,1))
+
