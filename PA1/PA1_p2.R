@@ -99,7 +99,7 @@ chart1 <- ggplot() +
         legend.key = element_rect(fill = "white"), #to make legend symbol background white
         panel.background = element_rect(fill = "white", colour = NA))   #to make the chart background white
 
-chart1
+#chart1
 rm(bar_data, line_data, melt_inf, influenza_national_summary)
 
 #chart2
@@ -129,7 +129,7 @@ chart2 <- ggplot(data = melt_data) +
             panel.background = element_rect(fill = "white", colour = NA))   #to make the chart background white
 
   
-chart2
+#chart2
 rm(chart2_data, melt_data)
 
 ##Chart3
@@ -180,7 +180,7 @@ chart3 <- ggplot() +
                 panel.background = element_rect(fill = "white", colour = NA))   #to make the chart background white
 
 
-chart3
+#chart3
 rm(chart3_data, melt_data)
 
 ##chart4
@@ -216,7 +216,7 @@ chart4 <- ggplot() +
                 legend.box.background = element_rect(color = 'black', size = 2))
 
 
-chart4
+#chart4
 rm(chart4_data, melt_data)
 
 ##chart5
@@ -259,7 +259,7 @@ chart5 <- plot_usmap(data = req_data, values = "ACTIVITY.LEVEL", lines = "black"
   scale_fill_manual(values = c( "#CC0000", "#D73800", "#E27100", "#EEAA00", "#F9E200", "#E2F800", "#AAEA00", "#71DD00", "#38CF00", "#00C200")) +
   theme(legend.position = "right")
 
-chart5
+#chart5
 rm(chart5_data, req_data,colfunc)
 
 # #to get discrete color codes equidistant from a gradient
@@ -291,3 +291,17 @@ rm(chart5_data, req_data,colfunc)
 
 #paste('Level ', seq(1,10,1))
 
+#install.packages('plotly', dependencies = T)
+library(plotly)
+
+chart1 <- ggplotly(chart1)
+chart2 <- ggplotly(chart2)
+chart3 <- ggplotly(chart3)
+#chart4 <- ggplotly(chart4)
+#chart5 <- ggplotly(chart5)
+
+chart1
+chart2
+chart3
+chart4
+chart5
