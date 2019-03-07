@@ -128,7 +128,7 @@ chart5 <- plot_geo(req_data, locationmode = 'USA-states') %>%
 chart5
 rm( req_data, chart5_data, df, l, g, marker_style)
 #https://stackoverflow.com/questions/34465947/plotly-maps-not-rendering-in-r
-
+#Use the "Open in a new window option" (last option under Viewer, which opens the chart in browser) to view the interactive map.
 ## TO DO ##
 #1)Grouped legends
 #2)Discrete legends 
