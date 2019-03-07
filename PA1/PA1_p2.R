@@ -292,11 +292,11 @@ rm(chart5_data, req_data,colfunc)
 #paste('Level ', seq(1,10,1))
 
 #install.packages('plotly', dependencies = T)
-library(plotly)
+#library(plotly)
 
-chart1 <- ggplotly(chart1)
-chart2 <- ggplotly(chart2)
-chart3 <- ggplotly(chart3)
+#chart1 <- ggplotly(chart1)
+#chart2 <- ggplotly(chart2)
+#chart3 <- ggplotly(chart3)
 #chart4 <- ggplotly(chart4)
 #chart5 <- ggplotly(chart5)
 
