@@ -95,7 +95,10 @@ rm(chart4_data)
 #1) No. of deaths above each SEASON
 ############################################################################################################################################
                                                           ##Chart5##
-df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
+library(tidyverse)
+df <- read.csv("2011_us_ag_exports.csv", header = T)
+
+#write.csv(df, '2011_us_ag_exports.csv')
 #head(df)
 df <- df[, c(1,2,3,4)]
 

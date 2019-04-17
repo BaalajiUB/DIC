@@ -1,0 +1,34 @@
+Shared file with Docker for this container is at DIC/PA2
+All files here will be available at /src in the Docker container
+
+Docker::
+docker run --hostname=quickstart.cloudera --privileged=true -t -i -v ~/git_workspace/DIC/PA2:/src --publish-all=true -p 8888 cloudera/quickstart /usr/bin/docker-quickstart
+: To run a container 
+
+ctrl+d : to quit or leave the container
+
+#https://stackoverflow.com/questions/28574433/do-docker-containers-retain-file-changes
+docker start <container-id> : to start a container
+docker attach  <container-id> : to re-attach to a container
+#docker ps -a : to find all active containers
+
+docker rm $(docker ps -a -q) : remove all containers
+
+Hadoop::
+##Reference##
+https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/FileSystemShell.html#get
+
+hadoop fs -put *.txt /user/Baalaji/MR/input :
+ to move data from local shared folder to hadoop input 	directory
+
+hadoop fs -rm -r /user/Baalaji/MR/output : must delete if error thrown outpur path already exists
+
+hadoop jar /usr/lib/hadoop-mapreduce/hadoop-streaming-2.6.0-cdh5.7.0.jar  -file /src/mapper.py    -mapper /src/mapper.py  -file /src/reducer.py   -reducer /src/reducer.py  -input /user/Baalaji/MR/input/* -output /user/Baalaji/MR/output : 
+to run map-reduce module on all input data
+
+hadoop fs -cat /user/Baalaji/MR/output/part-00000 :
+to view output file
+
+hadoop fs -get /user/Baalaji/MR/output/part-00000 :
+to get result files into the local container instance fs (get it from /src so that it is sharable with my local machine)
+

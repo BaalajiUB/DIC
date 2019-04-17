@@ -187,11 +187,17 @@ rm(chart3_data, melt_data)
 chart4_data <- read.csv(file = 'chart4_data.csv', header = T, skip = 1) #skip is used to skip n lines from beginning
 #names(chart4_data)
 #head(chart4_data)
-chart4_data <- chart4_data[,-3]
+#chart4_data <- chart4_data[,-3]
 melt_data <- melt(chart4_data, id = c('SEASON','WEEK.NUMBER'))
 melt_data$WEEK.NUMBER <- as.Date(paste(melt_data$WEEK.NUMBER, 01, sep="-"), "%Y-%U-%u")
 #length(unique(melt_data$WEEK.NUMBER))
 #names(melt_data)
+
+temp <- chart4_data[, c(1,3)]
+#str(temp)
+aggregated <- as.data.frame(aggregate(temp$NO..OF.DEATHS, list(temp$SEASON),sum))
+aggregated[,2]
+
 chart4 <- ggplot() +
           geom_bar(data = melt_data, mapping = aes(x = WEEK.NUMBER, y = value, fill = variable), stat = "identity", color = "black") +
           #facet_wrap(~ SEASON, ncol = 2) +
@@ -213,10 +219,11 @@ chart4 <- ggplot() +
                 legend.key = element_rect(fill = "white"), #to make legend symbol background white
                 legend.position = 'bottom',
                 panel.background = element_rect(fill = "white", colour = NA),#to make the chart background white
-                legend.box.background = element_rect(color = 'black', size = 2))
+                legend.box.background = element_rect(color = 'black', size = 2)) 
+
+ames(chart4_data)
 
 
-#chart4
 rm(chart4_data, melt_data)
 
 ##chart5
